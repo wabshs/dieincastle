@@ -1,6 +1,7 @@
 package com.taffy.neko;
 
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -8,6 +9,7 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 @SpringBootApplication
 @Slf4j
+@MapperScan("com.taffy.neko.mapper")
 public class GenshiBackendApplication {
 
     public static void main(String[] args) {
