@@ -7,7 +7,6 @@ import lombok.Data;
 
 @Data
 public class AboutMeVO {
-    private String id;
 
     private String aboutMe;
 }

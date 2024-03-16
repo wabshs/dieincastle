@@ -23,6 +23,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public R<?> getUserAboutMe(String id) {
         User user = userMapper.selectById(id);
         AboutMeVO aboutMeVO = UserToAboutMeVO.INSTANT.toAboutMeVO(user);
-        return new R<>().success(200, "操作成功", aboutMeVO);
+        if(aboutMeVO.getAboutMe()!=null){
+            return new R<>().success(200, "操作成功", aboutMeVO);
+        } else {
+            return new R<>().error(500, "无数据");
+        }
+
     }
 }

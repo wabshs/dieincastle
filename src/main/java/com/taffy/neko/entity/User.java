@@ -2,6 +2,7 @@ package com.taffy.neko.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import lombok.Data;
 
 @Data
@@ -21,7 +22,7 @@ public class User {
 
     private String aboutMe;
 
-    private String like;
+    private String likes;
 
-    private int isDelete;
+    private int isDeleted;
 }

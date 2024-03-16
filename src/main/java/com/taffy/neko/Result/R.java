@@ -35,8 +35,8 @@ public class R<T> {
     //失败
     public R<T> error(Integer code, String msg) {
         R<T> result = new R<T>();
-        result.setMsg("操作失败");
-        result.setCode(400);
+        result.setMsg(msg);
+        result.setCode(code);
         return result;
     }
 }
