@@ -19,4 +19,6 @@ public interface UserService extends IService<User> {
 
     R<?> updateAboutMe(UpdateAboutMeDTO reqDTO);
 
+    R<?> getUserProfile(String id);
+
 }

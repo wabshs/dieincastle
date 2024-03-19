@@ -33,4 +33,13 @@ public class UserController {
     public R<?> updateAboutMe(@RequestBody UpdateAboutMeDTO reqDTO) {
         return userService.updateAboutMe(reqDTO);
     }
+
+    @GetMapping("/userProfile/{id}")
+    @ApiImplicitParam(name = "id", value = "id", required = true)
+    @ApiOperation(value = "根据id获取个人资料")
+    public R<?> getUserProfile(@PathVariable String id) {
+        return userService.getUserProfile(id);
+    }
+
+
 }

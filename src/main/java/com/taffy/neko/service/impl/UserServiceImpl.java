@@ -8,6 +8,7 @@ import com.taffy.neko.mapper.UserMapper;
 import com.taffy.neko.models.convertor.UserToAboutMeConvert;
 import com.taffy.neko.models.dto.UpdateAboutMeDTO;
 import com.taffy.neko.models.vo.AboutMeVO;
+import com.taffy.neko.models.vo.UserProfileVO;
 import com.taffy.neko.service.UserService;
 import org.mapstruct.ap.internal.model.assignment.UpdateWrapper;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public R<?> updateAboutMe(UpdateAboutMeDTO reqDTO) {
+        //有些画蛇添足了....User类根本不需要出现,ReqDTO即可  算了就这样不改了
         User user = UserToAboutMeConvert.INSTANT.ToUser(reqDTO);
         LambdaUpdateWrapper<User> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
         lambdaUpdateWrapper.eq(User::getId, user.getId()).set(User::getAboutMe, user.getAboutMe());
@@ -45,6 +47,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         } else {
             return new R<>().error(999, "操作失败!");
         }
+    }
+
+    @Override
+    public R<?> getUserProfile(String id) {
+        User user = userMapper.selectById(id);
+        UserProfileVO userProfileVO = UserToAboutMeConvert.INSTANT.toUserProFileVO(user);
+        return new R<>().success(200, "操作成功", userProfileVO);
     }
 
 
