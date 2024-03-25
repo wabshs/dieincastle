@@ -17,8 +17,18 @@ public interface UserService extends IService<User> {
     R<?> getUserAboutMe(String id);
 
 
+    /**
+     *
+     * @param reqDTO 请求体
+     * @return 更新关于我的内容
+     */
     R<?> updateAboutMe(UpdateAboutMeDTO reqDTO);
 
+    /**
+     *
+     * @param id 用户id
+     * @return 用户详细资料
+     */
     R<?> getUserProfile(String id);
 
 }

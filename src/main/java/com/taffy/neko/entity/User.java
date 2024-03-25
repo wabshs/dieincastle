@@ -24,5 +24,7 @@ public class User {
 
     private String likes;
 
+    private String avatarUrl;
+
     private int isDeleted;
 }

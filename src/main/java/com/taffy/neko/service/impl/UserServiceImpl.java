@@ -53,7 +53,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public R<?> getUserProfile(String id) {
         User user = userMapper.selectById(id);
         UserProfileVO userProfileVO = UserToAboutMeConvert.INSTANT.toUserProFileVO(user);
-        return new R<>().success(ResponseEnum.SUCCESS);
+        return new R<>().success(ResponseEnum.SUCCESS,userProfileVO);
     }
 
 
