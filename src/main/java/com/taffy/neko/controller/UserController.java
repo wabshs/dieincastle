@@ -3,6 +3,7 @@ package com.taffy.neko.controller;
 
 import com.taffy.neko.Result.R;
 import com.taffy.neko.models.dto.UpdateAboutMeDTO;
+import com.taffy.neko.models.dto.UserRegisterDTO;
 import com.taffy.neko.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -39,6 +40,12 @@ public class UserController {
     @ApiOperation(value = "根据id获取个人资料")
     public R<?> getUserProfile(@PathVariable String id) {
         return userService.getUserProfile(id);
+    }
+
+    @ApiOperation(value = "用户注册")
+    @PostMapping("/userRegister")
+    public R<?> userRegister(@RequestBody UserRegisterDTO reqDTO) {
+        return userService.userRegister(reqDTO);
     }
 
 

@@ -2,14 +2,12 @@ package com.taffy.neko.controller;
 
 
 import com.taffy.neko.Result.R;
+import com.taffy.neko.models.dto.CreateArticleDTO;
 import com.taffy.neko.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -24,7 +22,13 @@ public class ArticleController {
     @GetMapping("/{id}")
     @ApiImplicitParam(name = "id", value = "id", required = true)
     @ApiOperation(value = "根据id获取关于文章信息")
-    public R<?> getArticleById(@PathVariable int id) {
+    public R<?> getArticleById(@PathVariable String id) {
         return articleService.getArticleById(id);
+    }
+
+    @PostMapping("/createArticle")
+    @ApiOperation(value = "新建帖子")
+    public R<?> createArticle(@RequestBody CreateArticleDTO reqDTO) {
+        return articleService.createArticle(reqDTO);
     }
 }

@@ -5,7 +5,8 @@ import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Article;
 import com.taffy.neko.enums.ResponseEnum;
 import com.taffy.neko.mapper.ArticleMapper;
-import com.taffy.neko.models.convertor.ArticleDOToVOConvert;
+import com.taffy.neko.models.convertor.ArticleConvert;
+import com.taffy.neko.models.dto.CreateArticleDTO;
 import com.taffy.neko.models.vo.ArticleVO;
 import com.taffy.neko.service.ArticleService;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,20 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     private ArticleMapper articleMapper;
 
     @Override
-    public R<?> getArticleById(int id) {
+    public R<?> getArticleById(String id) {
         Article article = articleMapper.selectById(id);
-        ArticleVO articleVO = ArticleDOToVOConvert.INSTANCE.toArticleVO(article);
+        ArticleVO articleVO = ArticleConvert.INSTANCE.toArticleVO(article);
         return new R<>().success(ResponseEnum.SUCCESS, articleVO);
+    }
+
+    @Override
+    public R<?> createArticle(CreateArticleDTO reqDTO) {
+        Article article = ArticleConvert.INSTANCE.toArticleDO(reqDTO);
+        int ifInsert = articleMapper.insert(article);
+        if (ifInsert == 1) {
+            return new R<>().success(ResponseEnum.SUCCESS);
+        } else {
+            return new R<>().error(ResponseEnum.ERROR);
+        }
     }
 }

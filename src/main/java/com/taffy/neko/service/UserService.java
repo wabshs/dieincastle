@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.User;
 import com.taffy.neko.models.dto.UpdateAboutMeDTO;
+import com.taffy.neko.models.dto.UserRegisterDTO;
 
 public interface UserService extends IService<User> {
 
@@ -30,5 +31,13 @@ public interface UserService extends IService<User> {
      * @return 用户详细资料
      */
     R<?> getUserProfile(String id);
+
+
+    /**
+     *
+     * @param reqDTO 注册请求体
+     * @return R
+     */
+    R<?> userRegister(UserRegisterDTO reqDTO);
 
 }

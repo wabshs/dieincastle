@@ -7,9 +7,9 @@ public class ArticleVO {
 
     private String content;
 
-    private String cover_url;
+    private String coverUrl;
 
-    private String user_id;
+    private String userId;
 
     //浏览量
     private int views;

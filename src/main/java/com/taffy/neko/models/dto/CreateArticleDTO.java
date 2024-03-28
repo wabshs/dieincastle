@@ -12,7 +12,7 @@ public class CreateArticleDTO {
     //正文内容
     private String content;
 
-    //封面图案
+    //封面图片链接
     private String coverUrl;
 
     //标题
