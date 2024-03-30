@@ -3,11 +3,13 @@ package com.taffy.neko.controller;
 
 import com.taffy.neko.Result.R;
 import com.taffy.neko.models.dto.UpdateAboutMeDTO;
+import com.taffy.neko.models.dto.UserLoginDTO;
 import com.taffy.neko.models.dto.UserRegisterDTO;
 import com.taffy.neko.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,8 +46,14 @@ public class UserController {
 
     @ApiOperation(value = "用户注册")
     @PostMapping("/userRegister")
-    public R<?> userRegister(@RequestBody UserRegisterDTO reqDTO) {
+    public R<?> userRegister(@Validated @RequestBody UserRegisterDTO reqDTO) {
         return userService.userRegister(reqDTO);
+    }
+
+    @ApiOperation(value = "用户登录")
+    @PostMapping("/userLogin")
+    public R<?> userLogin(@RequestBody UserLoginDTO reqDTO) {
+        return userService.userLogin(reqDTO);
     }
 
 

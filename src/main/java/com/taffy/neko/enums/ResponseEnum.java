@@ -7,6 +7,7 @@ import lombok.Getter;
 public enum ResponseEnum {
 
     USERNAME_ALREADY_EXIST(500, "用户名已存在"),
+    LOGIN_ERROR(500,"用户名或密码错误"),
     SUCCESS(200, "操作成功"),
     ERROR(500, "服务器异常"),
     NOT_FOUND(404, "资源未找到"),

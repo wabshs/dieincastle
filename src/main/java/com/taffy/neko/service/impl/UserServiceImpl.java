@@ -1,7 +1,7 @@
 package com.taffy.neko.service.impl;
 
+import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taffy.neko.Result.R;
@@ -10,6 +10,7 @@ import com.taffy.neko.enums.ResponseEnum;
 import com.taffy.neko.mapper.UserMapper;
 import com.taffy.neko.models.convertor.UserConvert;
 import com.taffy.neko.models.dto.UpdateAboutMeDTO;
+import com.taffy.neko.models.dto.UserLoginDTO;
 import com.taffy.neko.models.dto.UserRegisterDTO;
 import com.taffy.neko.models.vo.AboutMeVO;
 import com.taffy.neko.models.vo.UserProfileVO;
@@ -69,11 +70,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (ifSameUserName != 0) {
             return new R<>().error(ResponseEnum.USERNAME_ALREADY_EXIST);
         }
+        //加密成md5再存储
+        user.setPassword(DigestUtil.md5Hex(reqDTO.getPassword()));
         int isInsert = userMapper.insert(user);
         if (isInsert == 1) {
             return new R<>().success(ResponseEnum.SUCCESS);
         } else {
             return new R<>().error(ResponseEnum.ERROR);
+        }
+    }
+
+    @Override
+    public R<?> userLogin(UserLoginDTO reqDTO) {
+        LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        String md5Pwd = DigestUtil.md5Hex(reqDTO.getPassword());
+        //条件构造器
+        lambdaQueryWrapper.eq(User::getUserName, reqDTO.getUserName())
+                .eq(User::getPassword, md5Pwd);
+        if (userMapper.selectCount(lambdaQueryWrapper) == 1) {
+            return new R<>().success(ResponseEnum.SUCCESS);
+        } else {
+            return new R<>().error(ResponseEnum.LOGIN_ERROR);
         }
     }
 
