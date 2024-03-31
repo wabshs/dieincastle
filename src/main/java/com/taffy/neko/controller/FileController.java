@@ -4,6 +4,7 @@ package com.taffy.neko.controller;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.enums.ResponseEnum;
 import com.taffy.neko.service.FileService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -14,6 +15,7 @@ import javax.annotation.Resource;
 
 @RestController
 @RequestMapping("/file")
+@Api(tags = "文件模块")
 public class FileController {
 
     @Resource

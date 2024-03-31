@@ -52,7 +52,7 @@ public class UserController {
 
     @ApiOperation(value = "用户登录")
     @PostMapping("/userLogin")
-    public R<?> userLogin(@RequestBody UserLoginDTO reqDTO) {
+    public R<?> userLogin(@Validated @RequestBody UserLoginDTO reqDTO) {
         return userService.userLogin(reqDTO);
     }
 

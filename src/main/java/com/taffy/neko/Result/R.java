@@ -33,6 +33,14 @@ public class R<T> {
         return result;
     }
 
+    //自定义
+    public R<T> error(int code, String msg) {
+        R<T> result = new R<>();
+        result.setCode(code);
+        result.setMsg(msg);
+        return result;
+    }
+
     //失败
     public R<T> error(ResponseEnum responseEnum) {
         R<T> result = new R<>();

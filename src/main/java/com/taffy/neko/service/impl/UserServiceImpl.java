@@ -4,6 +4,7 @@ import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.taffy.neko.Exception.ServiceException;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.User;
 import com.taffy.neko.enums.ResponseEnum;
@@ -90,7 +91,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (userMapper.selectCount(lambdaQueryWrapper) == 1) {
             return new R<>().success(ResponseEnum.SUCCESS);
         } else {
-            return new R<>().error(ResponseEnum.LOGIN_ERROR);
+            throw new ServiceException(500, "用户名或者密码错误");
         }
     }
 
