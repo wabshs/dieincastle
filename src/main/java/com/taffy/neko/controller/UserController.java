@@ -5,6 +5,7 @@ import com.taffy.neko.Result.R;
 import com.taffy.neko.models.dto.UpdateAboutMeDTO;
 import com.taffy.neko.models.dto.UserLoginDTO;
 import com.taffy.neko.models.dto.UserRegisterDTO;
+import com.taffy.neko.service.EmailService;
 import com.taffy.neko.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -22,6 +23,7 @@ public class UserController {
 
     @Resource
     private UserService userService;
+
 
     @ApiImplicitParam(name = "id", value = "id", required = true)
     @ApiOperation(value = "根据id获取关于我的信息")
@@ -55,6 +57,7 @@ public class UserController {
     public R<?> userLogin(@Validated @RequestBody UserLoginDTO reqDTO) {
         return userService.userLogin(reqDTO);
     }
+
 
 
 }

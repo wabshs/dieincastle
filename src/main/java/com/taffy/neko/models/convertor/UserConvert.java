@@ -7,6 +7,7 @@ import com.taffy.neko.models.dto.UserRegisterDTO;
 import com.taffy.neko.models.vo.AboutMeVO;
 import com.taffy.neko.models.vo.UserProfileVO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 @Mapper

@@ -20,4 +20,7 @@ public class UserRegisterDTO {
     private String email;
 
     private String avatarUrl;
+
+    //邮箱验证码
+    private String authCode;
 }
