@@ -12,6 +12,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.concurrent.TimeUnit;
 
 
 @Service
@@ -31,8 +32,9 @@ public class EmailServiceImpl implements EmailService {
     public R<?> sendAuhCodeByEmail(String to) {
         SimpleMailMessage message = new SimpleMailMessage();
         String authCode = RandomUtil.randomNumbers(6);
-
-        //todo 把验证码存到redis里面后期注册的时候对比传入的验证码是否一致 Map<to,authCode> 键值对 key为userName(to)
+        //存进去 5分钟过期
+        redisCache.setCacheObject(to, authCode, 5, TimeUnit.MINUTES);
+        //把验证码存到redis里面后期注册的时候对比传入的验证码是否一致 Map<to,authCode> 键值对 key为userName(to)
         message.setFrom(from);
         message.setTo(to);
         message.setSubject("智慧校园论坛");

@@ -11,6 +11,7 @@ public enum ResponseEnum {
     SUCCESS(200, "操作成功"),
     ERROR(500, "服务器异常"),
     NOT_FOUND(404, "资源未找到"),
+    AUTH_CODE_ERROR(500,"验证码错误"),
     UNAUTHORIZED(401, "未授权");
 
 

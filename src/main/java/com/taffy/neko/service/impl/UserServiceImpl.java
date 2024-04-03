@@ -16,16 +16,21 @@ import com.taffy.neko.models.dto.UserRegisterDTO;
 import com.taffy.neko.models.vo.AboutMeVO;
 import com.taffy.neko.models.vo.UserProfileVO;
 import com.taffy.neko.service.UserService;
+import com.taffy.neko.utils.RedisCache;
 import org.springframework.stereotype.Service;
 
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Resource
     private UserMapper userMapper;
+
+    @Resource
+    private RedisCache redisCache;
 
 
     @Override
@@ -71,6 +76,13 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (ifSameUserName != 0) {
             return new R<>().error(ResponseEnum.USERNAME_ALREADY_EXIST);
         }
+        String authCode = reqDTO.getAuthCode();
+        //把redis里存的验证码取出来
+        String redisAuthCode = redisCache.getCacheObject(reqDTO.getEmail());
+        if (!Objects.equals(authCode, redisAuthCode)) {
+            return new R<>().error(ResponseEnum.AUTH_CODE_ERROR);
+        }
+        //如果正确
         //加密成md5再存储
         user.setPassword(DigestUtil.md5Hex(reqDTO.getPassword()));
         int isInsert = userMapper.insert(user);
