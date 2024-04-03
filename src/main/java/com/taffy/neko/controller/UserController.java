@@ -25,6 +25,7 @@ public class UserController {
     private UserService userService;
 
 
+
     @ApiImplicitParam(name = "id", value = "id", required = true)
     @ApiOperation(value = "根据id获取关于我的信息")
     @GetMapping("/aboutMe/{id}")

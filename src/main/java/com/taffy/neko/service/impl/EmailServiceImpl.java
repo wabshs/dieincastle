@@ -5,6 +5,7 @@ import com.taffy.neko.Exception.ServiceException;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.enums.ResponseEnum;
 import com.taffy.neko.service.EmailService;
+import com.taffy.neko.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,10 +23,16 @@ public class EmailServiceImpl implements EmailService {
     @Value("${spring.mail.username}")
     private String from;
 
+    @Resource
+    private RedisCache redisCache;
+
 
     @Override
-    public R<?> sendAuhCodeByEmail(String to, String authCode) {
+    public R<?> sendAuhCodeByEmail(String to) {
         SimpleMailMessage message = new SimpleMailMessage();
+        String authCode = RandomUtil.randomNumbers(6);
+
+        //todo 把验证码存到redis里面后期注册的时候对比传入的验证码是否一致 Map<to,authCode> 键值对 key为userName(to)
         message.setFrom(from);
         message.setTo(to);
         message.setSubject("智慧校园论坛");
@@ -33,8 +40,8 @@ public class EmailServiceImpl implements EmailService {
         try {
             MailSender.send(message);
             return new R<>().success(ResponseEnum.SUCCESS);
-        } catch (ServiceException e) {
-            throw new ServiceException(e.getCode(), e.getMessage());
+        } catch (Exception e) {
+            throw new ServiceException(500, e.getMessage());
         }
     }
 }

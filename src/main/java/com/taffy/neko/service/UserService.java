@@ -28,6 +28,7 @@ public interface UserService extends IService<User> {
     /**
      * @param id 用户id
      * @return 用户详细资料
+     *
      */
     R<?> getUserProfile(String id);
 
