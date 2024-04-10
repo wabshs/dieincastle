@@ -5,10 +5,16 @@ import lombok.Data;
 @Data
 public class ArticleVO {
 
+    //正文
     private String content;
 
+    //标题
+    private String header;
+
+    //封面链接
     private String coverUrl;
 
+    //作者id
     private String userId;
 
     //浏览量
@@ -21,4 +27,5 @@ public class ArticleVO {
     private int isVisible;
 
     //作者头像
+    private String avatarUrl;
 }

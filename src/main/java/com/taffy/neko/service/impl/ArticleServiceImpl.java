@@ -1,5 +1,6 @@
 package com.taffy.neko.service.impl;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Article;
@@ -12,6 +13,7 @@ import com.taffy.neko.service.ArticleService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 
 @Service
@@ -37,4 +39,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
             return new R<>().error(ResponseEnum.ERROR);
         }
     }
+
+    @Override
+    public R<?> selectArticleVOByPage(int pageNum, int pageSize) {
+        Page<ArticleVO> page = new Page<>(pageNum, pageSize);
+        List<ArticleVO> articleVOList = articleMapper.selectArticleVOByPage(page);
+        return new R<>().success(ResponseEnum.SUCCESS, articleVOList);
+    }
+
+
 }

@@ -9,11 +9,12 @@ public interface ArticleService extends IService<Article> {
 
 
     /**
-     *
      * @param id 文章id
      * @return 文章详细信息
      */
     R<?> getArticleById(String id);
 
     R<?> createArticle(CreateArticleDTO reqDTO);
+
+    R<?> selectArticleVOByPage(int pageNum, int pageSize);
 }

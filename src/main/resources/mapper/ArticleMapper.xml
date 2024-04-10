@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.taffy.neko.mapper.ArticleMapper">
+
+    <select id="selectArticleVOByPage" resultType="com.taffy.neko.models.vo.ArticleVO">
+        select a.content,
+               a.header,
+               a.cover_url,
+               a.user_id,
+               a.views,
+               a.is_top,
+               a.is_visible,
+               u.avatar_url
+        from article a
+                 join user u on a.user_id = u.id
+    </select>
+</mapper>

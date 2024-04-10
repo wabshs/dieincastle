@@ -31,4 +31,10 @@ public class ArticleController {
     public R<?> createArticle(@RequestBody CreateArticleDTO reqDTO) {
         return articleService.createArticle(reqDTO);
     }
+
+    @GetMapping("/selectArticlePage")
+    @ApiOperation(value = "查找帖子")
+    public R<?> selectArticleVOByPage(@RequestParam int pageNum, @RequestParam int pageSize) {
+        return articleService.selectArticleVOByPage(pageNum, pageSize);
+    }
 }
