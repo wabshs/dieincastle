@@ -19,4 +19,6 @@ public class ArticleVO {
 
     //是否可见
     private int isVisible;
+
+    //作者头像
 }

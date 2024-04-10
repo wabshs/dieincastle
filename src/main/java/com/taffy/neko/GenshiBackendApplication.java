@@ -18,9 +18,9 @@ public class GenshiBackendApplication {
         String port = environment.getProperty("server.port");
         String serviceName = environment.getProperty("spring.application.name");
         log.info("\n---------------------------------------------\n\t" +
-                "本项目已经在 " + port + " 端口启动(>^ω^<) \n\t" +
-                "项目名称为: " + serviceName + "\n\t"+
-                "接口文档地址: localhost:"+port+"/api/doc.html \n\t");
+                "本项目已经在 {} 端口启动(>^ω^<) \n\t" +
+                "项目名称为: {}\n\t" +
+                "接口文档地址: localhost:{}/api/doc.html \n\t", port, serviceName, port);
     }
 
 }

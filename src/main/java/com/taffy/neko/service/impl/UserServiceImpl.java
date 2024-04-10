@@ -82,7 +82,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         if (!Objects.equals(authCode, redisAuthCode)) {
             return new R<>().error(ResponseEnum.AUTH_CODE_ERROR);
         }
-        //如果正确
+        //如果正确删掉Redis的缓存
+        redisCache.deleteObject(reqDTO.getEmail());
         //加密成md5再存储
         user.setPassword(DigestUtil.md5Hex(reqDTO.getPassword()));
         int isInsert = userMapper.insert(user);
@@ -101,7 +102,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         lambdaQueryWrapper.eq(User::getUserName, reqDTO.getUserName())
                 .eq(User::getPassword, md5Pwd);
         if (userMapper.selectCount(lambdaQueryWrapper) == 1) {
-            return new R<>().success(ResponseEnum.SUCCESS);
+            //开始设计的时候脑子有问题 想错了
+            //把这个User查出来返回id
+            User user = userMapper.selectOne(lambdaQueryWrapper);
+            return new R<>().success(ResponseEnum.SUCCESS, user.getId());
         } else {
             throw new ServiceException(500, "用户名或者密码错误");
         }
