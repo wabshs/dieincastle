@@ -3,8 +3,8 @@
 <mapper namespace="com.taffy.neko.mapper.ArticleMapper">
 
     <select id="selectArticleVOByPage" resultType="com.taffy.neko.models.vo.ArticleVO">
-        select a.content,
-               a.header,
+        select a.header,
+               a.id,
                a.cover_url,
                a.user_id,
                a.views,

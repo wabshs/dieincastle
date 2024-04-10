@@ -45,4 +45,11 @@ public interface UserService extends IService<User> {
      */
     R<?> userLogin(UserLoginDTO reqDTO);
 
+    /**
+     *
+     * @param id 用户id
+     * @return R
+     */
+    R<?> userAvatar(String id);
+
 }

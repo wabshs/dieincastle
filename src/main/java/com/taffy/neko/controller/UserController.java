@@ -5,7 +5,7 @@ import com.taffy.neko.Result.R;
 import com.taffy.neko.models.dto.UpdateAboutMeDTO;
 import com.taffy.neko.models.dto.UserLoginDTO;
 import com.taffy.neko.models.dto.UserRegisterDTO;
-import com.taffy.neko.service.EmailService;
+import com.taffy.neko.models.vo.UserProfileVO;
 import com.taffy.neko.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -23,7 +23,6 @@ public class UserController {
 
     @Resource
     private UserService userService;
-
 
 
     @ApiImplicitParam(name = "id", value = "id", required = true)
@@ -59,6 +58,11 @@ public class UserController {
         return userService.userLogin(reqDTO);
     }
 
+    @GetMapping("/userAvatar/{id}")
+    @ApiOperation("根据id获取作者头像")
+    public R<?> userAvatar(@PathVariable String id) {
+        return userService.userAvatar(id);
+    }
 
 
 }

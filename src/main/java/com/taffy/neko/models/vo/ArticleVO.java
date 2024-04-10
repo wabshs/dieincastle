@@ -5,8 +5,7 @@ import lombok.Data;
 @Data
 public class ArticleVO {
 
-    //正文
-    private String content;
+    private String id;
 
     //标题
     private String header;
