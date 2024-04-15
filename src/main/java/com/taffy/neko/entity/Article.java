@@ -35,4 +35,6 @@ public class Article {
     //标题
     @NotBlank(message = "标题不能为空")
     private String header;
+
+    private String createTime;
 }

@@ -37,4 +37,9 @@ public class ArticleController {
     public R<?> selectArticleVOByPage(@RequestParam int pageNum, @RequestParam int pageSize) {
         return articleService.selectArticleVOByPage(pageNum, pageSize);
     }
+
+    @PutMapping("/updateViews/{id}")
+    public R<?> updateViews(@PathVariable String id) {
+        return articleService.updateArticleViews(id);
+    }
 }

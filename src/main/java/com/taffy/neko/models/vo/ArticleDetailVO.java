@@ -17,4 +17,7 @@ public class ArticleDetailVO {
 
     //浏览量
     private int views;
+
+    //创建时间
+    private String createTime;
 }

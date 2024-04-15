@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.taffy.neko.mapper.ArticleMapper">
+    <update id="updateViews">
+        update article
+        set views = views + 1
+        where id = #{id}
+    </update>
 
     <select id="selectArticleVOByPage" resultType="com.taffy.neko.models.vo.ArticleVO">
         select a.header,

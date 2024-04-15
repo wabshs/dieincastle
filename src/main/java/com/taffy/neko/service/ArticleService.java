@@ -17,4 +17,7 @@ public interface ArticleService extends IService<Article> {
     R<?> createArticle(CreateArticleDTO reqDTO);
 
     R<?> selectArticleVOByPage(int pageNum, int pageSize);
+
+    //更新文章浏览量
+    R<?> updateArticleViews(String id);
 }

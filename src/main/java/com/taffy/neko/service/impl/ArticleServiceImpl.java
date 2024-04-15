@@ -48,5 +48,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return new R<>().success(ResponseEnum.SUCCESS, articleVOList);
     }
 
+    @Override
+    public R<?> updateArticleViews(String id) {
+        boolean ifUpdate = articleMapper.updateViews(id);
+        if (ifUpdate) {
+            return new R<>().success(ResponseEnum.SUCCESS);
+        } else {
+            return new R<>().error(ResponseEnum.ERROR);
+        }
+    }
+
 
 }
