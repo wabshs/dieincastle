@@ -14,6 +14,7 @@ import com.taffy.neko.models.dto.UpdateAboutMeDTO;
 import com.taffy.neko.models.dto.UserLoginDTO;
 import com.taffy.neko.models.dto.UserRegisterDTO;
 import com.taffy.neko.models.vo.AboutMeVO;
+import com.taffy.neko.models.vo.AvatarAndNickNameVO;
 import com.taffy.neko.models.vo.UserProfileVO;
 import com.taffy.neko.service.UserService;
 import com.taffy.neko.utils.RedisCache;
@@ -114,8 +115,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public R<?> userAvatar(String id) {
         User user = userMapper.selectById(id);
-        String avatarUrl = user.getAvatarUrl();
-        return new R<>().success(ResponseEnum.SUCCESS, avatarUrl);
+        AvatarAndNickNameVO avatarAndNickNameVO = new AvatarAndNickNameVO();
+        avatarAndNickNameVO.setAvatarUrl(user.getAvatarUrl());
+        avatarAndNickNameVO.setNickName(user.getNickName());
+        return new R<>().success(ResponseEnum.SUCCESS, avatarAndNickNameVO);
     }
 
 
