@@ -1,22 +1,17 @@
-package com.taffy.neko.entity;
+package com.taffy.neko.models.vo;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
-
-/**
- * @author 杜昱恒
- * 评论表
- */
 @Data
-@TableName("comment")
-public class Comment {
+@AllArgsConstructor
+@NoArgsConstructor
+public class CommentVO {
 
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
@@ -25,6 +20,8 @@ public class Comment {
     private String content;
 
     private String toCommentUserId;
+
+    private String toCommentUserName;
 
     private String toCommentId;
 
@@ -37,9 +34,9 @@ public class Comment {
     @ApiModelProperty("文章id")
     private String articleId;
 
-    @ApiModelProperty("是否删除0正常1删除")
-    private Integer delFlag;
-
-    @ApiModelProperty("创建人Id")
+    @ApiModelProperty("创建人id")
     private String createBy;
+
+    @ApiModelProperty("创建人的昵称")
+    private String nickName;
 }
