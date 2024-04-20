@@ -11,4 +11,5 @@ public interface CommentService extends IService<Comment> {
 
     R<?> commentList(String articleId, Integer pageNum, Integer pageSize);
 
+    R<?> addComment(Comment comment);
 }

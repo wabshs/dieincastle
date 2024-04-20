@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,4 +41,6 @@ public class CommentVO {
 
     @ApiModelProperty("创建人的昵称")
     private String nickName;
+
+    private List<CommentVO> children;
 }
