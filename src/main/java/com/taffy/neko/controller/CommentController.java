@@ -26,8 +26,6 @@ public class CommentController {
     @Resource
     private CommentService commentService;
 
-    @Resource
-    private LangChainSDK langChainSDK;
 
 
     @GetMapping("/commentList")
@@ -41,9 +39,5 @@ public class CommentController {
         return commentService.addComment(comment);
     }
 
-    @PostMapping("/test")
-    public R<?> test(@RequestParam String content) {
-        String s = langChainSDK.chatWithAI(content);
-        return new R<>().success(ResponseEnum.SUCCESS, s);
-    }
+
 }
