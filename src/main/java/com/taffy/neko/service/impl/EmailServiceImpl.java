@@ -43,7 +43,7 @@ public class EmailServiceImpl implements EmailService {
             MailSender.send(message);
             return new R<>().success(ResponseEnum.SUCCESS);
         } catch (Exception e) {
-            throw new ServiceException(500, e.getMessage());
+            throw new ServiceException(ResponseEnum.ERROR);
         }
     }
 }

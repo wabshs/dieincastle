@@ -108,7 +108,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             User user = userMapper.selectOne(lambdaQueryWrapper);
             return new R<>().success(ResponseEnum.SUCCESS, user.getId());
         } else {
-            throw new ServiceException(500, "用户名或者密码错误");
+            throw new ServiceException(ResponseEnum.LOGIN_ERROR);
         }
     }
 

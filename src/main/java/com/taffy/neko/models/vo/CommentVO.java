@@ -4,6 +4,7 @@ package com.taffy.neko.models.vo;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -41,6 +42,9 @@ public class CommentVO {
 
     @ApiModelProperty("创建人的昵称")
     private String nickName;
+
+    @ApiModelProperty("创建人的头像")
+    private String avatarUrl;
 
     private List<CommentVO> children;
 }

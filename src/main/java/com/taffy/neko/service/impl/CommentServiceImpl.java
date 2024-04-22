@@ -5,8 +5,10 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 
+import com.taffy.neko.Exception.ServiceException;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Comment;
+import com.taffy.neko.entity.User;
 import com.taffy.neko.enums.ResponseEnum;
 import com.taffy.neko.mapper.CommentMapper;
 import com.taffy.neko.mapper.UserMapper;
@@ -47,6 +49,9 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         for (CommentVO commentVO : commentVOList) {
             //查询对应的子评论
             List<CommentVO> children = getChildren(commentVO.getId());
+            //查头像
+            User user = userMapper.selectById(commentVO.getCreateBy());
+            commentVO.setAvatarUrl(user.getAvatarUrl());
             //赋值
             commentVO.setChildren(children);
         }
@@ -56,8 +61,13 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public R<?> addComment(Comment comment) {
-        save(comment);
-        return null;
+        boolean isSave = save(comment);
+        if (isSave) {
+            return new R<>().success(ResponseEnum.SUCCESS);
+        } else {
+            throw new ServiceException(ResponseEnum.ERROR);
+        }
+
     }
 
     /**
