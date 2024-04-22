@@ -32,15 +32,17 @@ public class LangChainSDK {
                 response.append(inputLine);
             }
             in.close();
+            //todo data:前缀去了只要JSON然后解析
             String jsonStr = response.toString().replace("data:", "");
-            // 打印响应
+            // 打印响应（看看效果）
             System.out.println(jsonStr);
             //返回
             JSONObject jsonObject = JSONUtil.parseObj(jsonStr);
+            //提取出我需要的
             return jsonObject.getStr("answer");
         } catch (Exception e) {
             log.error("异常! : {}", e.getMessage());
-            throw new ServiceException(ResponseEnum.ERROR);
+            throw new ServiceException(ResponseEnum.LANG_CHAIN_CHAT_ERROR);
         }
     }
 
