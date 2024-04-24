@@ -20,7 +20,9 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 import java.util.Objects;
+
 
 
 @Service
@@ -32,8 +34,6 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
 
     @Override
     public R<?> commentList(String articleId, Integer pageNum, Integer pageSize) {
-
-
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
         //对ArticleId进行判断
         queryWrapper.eq(Comment::getArticleId, articleId)
@@ -82,7 +82,15 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         queryWrapper.eq(Comment::getRootId, id)
                 .orderByAsc(Comment::getCreateTime);
         List<Comment> comments = list(queryWrapper);
-        return toCommentVOList(comments);
+        List<CommentVO> childrenVO = toCommentVOList(comments); // 将评论转换为 VO
+
+        // 为每个子评论获取头像 URL
+        for (CommentVO child : childrenVO) {
+            User user = userMapper.selectById(child.getCreateBy());
+            child.setAvatarUrl(user.getAvatarUrl());
+        }
+
+        return childrenVO;
     }
 
     private List<CommentVO> toCommentVOList(List<Comment> list) {

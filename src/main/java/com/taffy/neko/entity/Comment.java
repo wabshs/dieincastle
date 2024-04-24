@@ -37,8 +37,6 @@ public class Comment {
     @ApiModelProperty("文章id")
     private String articleId;
 
-    @ApiModelProperty("是否删除0正常1删除")
-    private Integer delFlag;
 
     @ApiModelProperty("创建人Id")
     private String createBy;
