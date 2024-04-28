@@ -7,7 +7,9 @@ import lombok.Data;
 @Data
 public class ChatLeftVO {
 
-    private String nickName;
+    private String userNickName;
 
-    private String avatarUrl;
+    private String userAvatarUrl;
+
+    private String userId;
 }

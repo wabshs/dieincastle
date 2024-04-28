@@ -13,6 +13,7 @@ public enum ResponseEnum {
     NOT_FOUND(404, "资源未找到"),
     AUTH_CODE_ERROR(500,"验证码错误"),
     LANG_CHAIN_CHAT_ERROR(421,"LangChain出错"),
+    CHAT_LIST_EMPTY(201,"无历史对话记录"),
     UNAUTHORIZED(401, "未授权");
 
 

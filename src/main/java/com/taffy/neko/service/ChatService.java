@@ -15,13 +15,7 @@ public interface ChatService extends IService<Chat> {
      */
     R<?> selectOneChat(String fromId, String toId);
 
-    /**
-     * 查和某人聊过天的所有人数组
-     *
-     * @param id 用户ID
-     * @return R(List)
-     */
-    R<?> selectChatUserIds(String id);
+
 
     /**
      * 创建一个聊天

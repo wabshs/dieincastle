@@ -6,29 +6,26 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taffy.neko.Exception.ServiceException;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Chat;
-import com.taffy.neko.entity.User;
 import com.taffy.neko.enums.ResponseEnum;
+
+import com.taffy.neko.mapper.ChatListMapper;
 import com.taffy.neko.mapper.ChatMapper;
-import com.taffy.neko.mapper.UserMapper;
 import com.taffy.neko.models.vo.ChatLeftVO;
 import com.taffy.neko.service.ChatService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 @Service
 @Slf4j
 public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements ChatService {
 
     @Resource
-    private ChatMapper chatMapper;
-
-    @Resource
-    private UserMapper userMapper;
+    private ChatListMapper chatListMapper;
 
     @Override
     public R<?> selectOneChat(String fromId, String toId) {
@@ -44,11 +41,6 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements Ch
         return new R<>().success(ResponseEnum.SUCCESS, chatList);
     }
 
-    @Override
-    public R<?> selectChatUserIds(String id) {
-        List<String> ids = chatMapper.getOtherUserIds(id);
-        return new R<>().success(ResponseEnum.SUCCESS, ids);
-    }
 
     @Override
     public R<?> sendChat(Chat chat) {
@@ -61,17 +53,7 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements Ch
 
     @Override
     public R<?> getChatLeft(String id) {
-        //和该用户聊过天的用户的ID集合
-        List<String> ids = chatMapper.getOtherUserIds(id);
-        //把这些人的信息查出来
-        List<User> users = userMapper.selectBatchIds(ids);
-        List<ChatLeftVO> vos = users.stream()
-                .map(user -> {
-                    ChatLeftVO vo = new ChatLeftVO();
-                    vo.setNickName(user.getNickName());
-                    vo.setAvatarUrl(user.getAvatarUrl());
-                    return vo;
-                }).collect(Collectors.toList());
+        List<ChatLeftVO> vos = chatListMapper.selectChatListById(id);
         return new R<>().success(ResponseEnum.SUCCESS, vos);
     }
 }

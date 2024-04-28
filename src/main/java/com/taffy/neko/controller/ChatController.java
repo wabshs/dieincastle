@@ -25,13 +25,6 @@ public class ChatController {
         return chatService.selectOneChat(fromId, toId);
     }
 
-    @GetMapping("/getChatUsersId")
-    @ApiOperation(value = "根据某一个用户ID查询所有和他有过聊天的人")
-    public R<?> getChatUserIds(@RequestParam String id) {
-        return chatService.selectChatUserIds(id);
-    }
-
-
     @PostMapping("/sendChat")
     @ApiOperation(value = "添加私信")
     public R<?> sendChat(@RequestBody Chat chat) {
