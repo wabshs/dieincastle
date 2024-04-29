@@ -18,6 +18,7 @@ import com.taffy.neko.models.vo.AvatarAndNickNameVO;
 import com.taffy.neko.models.vo.UserProfileVO;
 import com.taffy.neko.service.UserService;
 import com.taffy.neko.utils.RedisCache;
+import com.taffy.neko.utils.TokenUtils;
 import org.springframework.stereotype.Service;
 
 
@@ -85,8 +86,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         }
         //如果正确删掉Redis的缓存
         redisCache.deleteObject(reqDTO.getEmail());
-        //加密成md5再存储
-        user.setPassword(DigestUtil.md5Hex(reqDTO.getPassword()));
         int isInsert = userMapper.insert(user);
         if (isInsert == 1) {
             return new R<>().success(ResponseEnum.SUCCESS);
@@ -98,15 +97,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Override
     public R<?> userLogin(UserLoginDTO reqDTO) {
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
-        String md5Pwd = DigestUtil.md5Hex(reqDTO.getPassword());
         //条件构造器
         lambdaQueryWrapper.eq(User::getUserName, reqDTO.getUserName())
-                .eq(User::getPassword, md5Pwd);
+                .eq(User::getPassword, reqDTO.getPassword());
         if (userMapper.selectCount(lambdaQueryWrapper) == 1) {
             //开始设计的时候脑子有问题 想错了
             //把这个User查出来返回id
             User user = userMapper.selectOne(lambdaQueryWrapper);
-            return new R<>().success(ResponseEnum.SUCCESS, user.getId());
+            String token = TokenUtils.getToken(user.getId(), reqDTO.getPassword());
+            //设置Token
+            reqDTO.setToken(token);
+            reqDTO.setUserId(user.getId());
+            return new R<>().success(ResponseEnum.SUCCESS, reqDTO);
         } else {
             throw new ServiceException(ResponseEnum.LOGIN_ERROR);
         }

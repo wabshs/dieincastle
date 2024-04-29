@@ -11,4 +11,9 @@ public class UserLoginDTO {
     private String userName;
 
     private String password;
+
+    private String token;
+
+
+    private String userId;
 }
