@@ -14,7 +14,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(jwtInterceptor())
                 .addPathPatterns("/**") //拦截所有请求
                 .excludePathPatterns("/article/selectArticlePage", "/user/userLogin"
-                        , "/article/*", "/comment/commentList"
+                        , "/article/*", "/comment/commentList", "/file/uploadPic"
                 );
     }
 

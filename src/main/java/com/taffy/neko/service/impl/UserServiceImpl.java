@@ -101,7 +101,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         lambdaQueryWrapper.eq(User::getUserName, reqDTO.getUserName())
                 .eq(User::getPassword, reqDTO.getPassword());
         if (userMapper.selectCount(lambdaQueryWrapper) == 1) {
-            //开始设计的时候脑子有问题 想错了
             //把这个User查出来返回id
             User user = userMapper.selectOne(lambdaQueryWrapper);
             String token = TokenUtils.getToken(user.getId(), reqDTO.getPassword());

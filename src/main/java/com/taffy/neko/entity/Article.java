@@ -37,4 +37,7 @@ public class Article {
     private String header;
 
     private String createTime;
+
+    //帖子标签
+    private String tags;
 }

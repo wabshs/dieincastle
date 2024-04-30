@@ -1,6 +1,9 @@
 package com.taffy.neko.models.vo;
 
+import com.taffy.neko.entity.ArticleTags;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ArticleVO {
@@ -27,4 +30,6 @@ public class ArticleVO {
 
     //作者头像
     private String avatarUrl;
+
+    private List<ArticleTags> articleTags;
 }

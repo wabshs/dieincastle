@@ -42,4 +42,6 @@ public class ArticleController {
     public R<?> updateViews(@PathVariable String id) {
         return articleService.updateArticleViews(id);
     }
+
+
 }

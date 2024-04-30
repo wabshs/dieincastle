@@ -10,7 +10,6 @@ import org.springframework.core.env.ConfigurableEnvironment;
 
 @SpringBootApplication
 @Slf4j
-@MapperScan("com.taffy.neko.mapper")
 public class GenshiBackendApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(GenshiBackendApplication.class, args);
