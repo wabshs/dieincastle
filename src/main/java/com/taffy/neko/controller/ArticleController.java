@@ -43,5 +43,10 @@ public class ArticleController {
         return articleService.updateArticleViews(id);
     }
 
+    @GetMapping("/getArticleTags")
+    public R<?> getArticleTags(){
+        return articleService.getArticleTags();
+    }
+
 
 }

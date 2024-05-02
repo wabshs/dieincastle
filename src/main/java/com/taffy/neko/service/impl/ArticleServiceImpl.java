@@ -82,4 +82,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
                 .collect(Collectors.toList()); // ---------把String转化成List---------
         return articleTagsService.selectTagsBatchByIds(tagIds);
     }
+
+    @Override
+    public R<?> getArticleTags() {
+        List<ArticleTags> articleTagsList = articleTagsService.list();
+        return new R<>().success(ResponseEnum.SUCCESS, articleTagsList);
+    }
 }

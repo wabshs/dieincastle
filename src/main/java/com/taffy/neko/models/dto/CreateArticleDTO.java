@@ -17,4 +17,7 @@ public class CreateArticleDTO {
 
     //标题
     private String header;
+
+    //标签
+    private String tags;
 }
