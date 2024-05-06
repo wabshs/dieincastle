@@ -39,14 +39,21 @@ public class ArticleController {
     }
 
     @PutMapping("/updateViews/{id}")
+    @ApiOperation(value = "更新浏览量")
     public R<?> updateViews(@PathVariable String id) {
         return articleService.updateArticleViews(id);
     }
 
     @GetMapping("/getArticleTags")
-    public R<?> getArticleTags(){
+    @ApiOperation(value = "获取文章标签")
+    public R<?> getArticleTags() {
         return articleService.getArticleTags();
     }
 
+    @GetMapping("/getArticleCount")
+    @ApiOperation(value = "获取文章数量")
+    public R<?> getArticleCount() {
+        return articleService.getArticleCount();
+    }
 
 }

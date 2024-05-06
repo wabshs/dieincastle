@@ -27,4 +27,6 @@ public interface ArticleService extends IService<Article> {
     List<ArticleTags> selectArticleTags(String articleId);
 
     R<?> getArticleTags();
+
+    R<?> getArticleCount();
 }

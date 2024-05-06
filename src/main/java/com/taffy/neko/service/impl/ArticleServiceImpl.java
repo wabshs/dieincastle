@@ -88,4 +88,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<ArticleTags> articleTagsList = articleTagsService.list();
         return new R<>().success(ResponseEnum.SUCCESS, articleTagsList);
     }
+
+    @Override
+    public R<?> getArticleCount() {
+        long count = count();
+        return new R<>().success(ResponseEnum.SUCCESS, count);
+    }
 }
