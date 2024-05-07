@@ -52,4 +52,7 @@ public interface UserService extends IService<User> {
      */
     R<?> userAvatar(String id);
 
+    R<?> getUnReadMsgNum(String id);
+
+    R<?> getUnReadMsgNumOne(String toId, String fromId);
 }

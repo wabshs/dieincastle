@@ -64,6 +64,17 @@ public class UserController {
         return userService.userAvatar(id);
     }
 
+    @GetMapping("/unReadMsgCount/{id}")
+    @ApiOperation("总未读消息条数")
+    public R<?> getUnReadMsgNum(@PathVariable String id) {
+        return userService.getUnReadMsgNum(id);
+    }
+
+    @GetMapping("/unReadMsgCountOne")
+    @ApiOperation("和每个私聊用户的未读消息数量")
+    public R<?> getUnReadMsgNumOne(@RequestParam String toId, @RequestParam String fromId) {
+        return userService.getUnReadMsgNumOne(toId,fromId);
+    }
 
 
 }

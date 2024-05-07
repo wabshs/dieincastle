@@ -15,8 +15,11 @@
                a.views,
                a.is_top,
                a.is_visible,
+               a.create_time,
                u.avatar_url
         from article a
-                 join user u on a.user_id = u.id
+                 join user u
+                      on a.user_id = u.id
+        order by create_time desc
     </select>
 </mapper>

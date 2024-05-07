@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taffy.neko.Exception.ServiceException;
 import com.taffy.neko.Result.R;
+import com.taffy.neko.entity.Chat;
 import com.taffy.neko.entity.User;
 import com.taffy.neko.enums.ResponseEnum;
 import com.taffy.neko.mapper.UserMapper;
@@ -16,6 +17,7 @@ import com.taffy.neko.models.dto.UserRegisterDTO;
 import com.taffy.neko.models.vo.AboutMeVO;
 import com.taffy.neko.models.vo.AvatarAndNickNameVO;
 import com.taffy.neko.models.vo.UserProfileVO;
+import com.taffy.neko.service.ChatService;
 import com.taffy.neko.service.UserService;
 import com.taffy.neko.utils.RedisCache;
 import com.taffy.neko.utils.TokenUtils;
@@ -33,6 +35,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Resource
     private RedisCache redisCache;
+
+    @Resource
+    private ChatService chatService;
 
 
     @Override
@@ -120,6 +125,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         avatarAndNickNameVO.setAvatarUrl(user.getAvatarUrl());
         avatarAndNickNameVO.setNickName(user.getNickName());
         return new R<>().success(ResponseEnum.SUCCESS, avatarAndNickNameVO);
+    }
+
+    @Override
+    public R<?> getUnReadMsgNum(String id) {
+        LambdaQueryWrapper<Chat> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        //接收方为“我”的id且为未读的消息
+        lambdaQueryWrapper.eq(Chat::getToId, id)
+                .eq(Chat::getIsRead, 0);
+        long count = chatService.count(lambdaQueryWrapper);
+        return new R<>().success(ResponseEnum.SUCCESS, count);
+    }
+
+    @Override
+    public R<?> getUnReadMsgNumOne(String toId, String fromId) {
+        LambdaQueryWrapper<Chat> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(Chat::getToId, toId)
+                .eq(Chat::getFromId, fromId)
+                .eq(Chat::getIsRead, 0);
+        long count = chatService.count(lambdaQueryWrapper);
+        return new R<>().success(ResponseEnum.SUCCESS, count);
     }
 
 
