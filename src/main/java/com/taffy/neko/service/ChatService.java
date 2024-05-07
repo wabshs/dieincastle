@@ -30,4 +30,6 @@ public interface ChatService extends IService<Chat> {
      * @return R
      */
     R<?> getChatLeft(String id);
+
+    R<?> readMsg(String fromId, String toId);
 }

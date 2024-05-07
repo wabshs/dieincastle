@@ -36,4 +36,10 @@ public class ChatController {
     public R<?> getChatLeftInfo(@RequestParam String userId) {
         return chatService.getChatLeft(userId);
     }
+
+    @PutMapping("/readMsg")
+    @ApiOperation(value = "让私信变成已读")
+    public R<?> readMsg(@RequestParam String fromId,@RequestParam String toId) {
+        return chatService.readMsg(fromId,toId);
+    }
 }

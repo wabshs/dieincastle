@@ -2,6 +2,7 @@ package com.taffy.neko.service.impl;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taffy.neko.Exception.ServiceException;
 import com.taffy.neko.Result.R;
@@ -55,5 +56,19 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements Ch
     public R<?> getChatLeft(String id) {
         List<ChatLeftVO> vos = chatListMapper.selectChatListById(id);
         return new R<>().success(ResponseEnum.SUCCESS, vos);
+    }
+
+    @Override
+    public R<?> readMsg(String fromId, String toId) {
+        LambdaUpdateWrapper<Chat> lambdaQueryWrapper = new LambdaUpdateWrapper<>();
+        lambdaQueryWrapper.eq(Chat::getFromId, fromId)
+                .eq(Chat::getToId, toId)
+                .set(Chat::getIsRead, 1);
+        boolean update = update(lambdaQueryWrapper);
+        if (update) {
+            return new R<>().success(ResponseEnum.SUCCESS);
+        } else {
+            throw new ServiceException(ResponseEnum.ERROR);
+        }
     }
 }
