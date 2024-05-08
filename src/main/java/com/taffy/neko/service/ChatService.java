@@ -3,6 +3,7 @@ package com.taffy.neko.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Chat;
+import com.taffy.neko.models.dto.ReadMsgDTO;
 
 public interface ChatService extends IService<Chat> {
 
@@ -31,5 +32,5 @@ public interface ChatService extends IService<Chat> {
      */
     R<?> getChatLeft(String id);
 
-    R<?> readMsg(String fromId, String toId);
+    R<?> readMsg(ReadMsgDTO reqDTO);
 }

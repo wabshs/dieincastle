@@ -1,6 +1,7 @@
 package com.taffy.neko.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taffy.neko.Result.R;
@@ -12,6 +13,7 @@ import com.taffy.neko.models.convertor.ArticleConvert;
 import com.taffy.neko.models.dto.CreateArticleDTO;
 import com.taffy.neko.models.vo.ArticleDetailVO;
 import com.taffy.neko.models.vo.ArticleVO;
+import com.taffy.neko.models.vo.HotArticleVO;
 import com.taffy.neko.service.ArticleService;
 import com.taffy.neko.service.ArticleTagsService;
 import org.springframework.stereotype.Service;
@@ -93,5 +95,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public R<?> getArticleCount() {
         long count = count();
         return new R<>().success(ResponseEnum.SUCCESS, count);
+    }
+
+    @Override
+    public R<?> getHotArticles() {
+        LambdaUpdateWrapper<Article> lambdaUpdateWrapper = new LambdaUpdateWrapper<>();
+        lambdaUpdateWrapper.orderByDesc(Article::getViews)
+                .last("limit 5");
+        List<Article> articles = articleMapper.selectList(lambdaUpdateWrapper);
+        List<HotArticleVO> hotArticleVOList = ArticleConvert.INSTANCE.toHotArticleVOList(articles);
+        return new R<>().success(ResponseEnum.SUCCESS, hotArticleVOList);
     }
 }

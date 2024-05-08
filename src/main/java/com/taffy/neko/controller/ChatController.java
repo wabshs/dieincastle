@@ -3,6 +3,7 @@ package com.taffy.neko.controller;
 
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Chat;
+import com.taffy.neko.models.dto.ReadMsgDTO;
 import com.taffy.neko.service.ChatService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -39,7 +40,7 @@ public class ChatController {
 
     @PutMapping("/readMsg")
     @ApiOperation(value = "让私信变成已读")
-    public R<?> readMsg(@RequestParam String fromId,@RequestParam String toId) {
-        return chatService.readMsg(fromId,toId);
+    public R<?> readMsg(@RequestBody ReadMsgDTO reqDTO) {
+        return chatService.readMsg(reqDTO);
     }
 }

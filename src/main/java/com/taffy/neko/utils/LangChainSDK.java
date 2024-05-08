@@ -29,7 +29,7 @@ public class LangChainSDK {
                 response.append(inputLine);
             }
             in.close();
-            //todo data:前缀去了只要JSON然后解析
+            //data:前缀去了只要JSON然后解析
             String jsonStr = response.toString().replace("data:", "");
             // 打印响应（看看效果）
             System.out.println(jsonStr);

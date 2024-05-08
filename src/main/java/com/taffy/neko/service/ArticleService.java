@@ -29,4 +29,6 @@ public interface ArticleService extends IService<Article> {
     R<?> getArticleTags();
 
     R<?> getArticleCount();
+
+    R<?> getHotArticles();
 }

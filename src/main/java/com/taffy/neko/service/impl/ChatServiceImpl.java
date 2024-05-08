@@ -11,6 +11,7 @@ import com.taffy.neko.enums.ResponseEnum;
 
 import com.taffy.neko.mapper.ChatListMapper;
 import com.taffy.neko.mapper.ChatMapper;
+import com.taffy.neko.models.dto.ReadMsgDTO;
 import com.taffy.neko.models.vo.ChatLeftVO;
 import com.taffy.neko.service.ChatService;
 import lombok.extern.slf4j.Slf4j;
@@ -59,10 +60,10 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat> implements Ch
     }
 
     @Override
-    public R<?> readMsg(String fromId, String toId) {
+    public R<?> readMsg(ReadMsgDTO reqDTO) {
         LambdaUpdateWrapper<Chat> lambdaQueryWrapper = new LambdaUpdateWrapper<>();
-        lambdaQueryWrapper.eq(Chat::getFromId, fromId)
-                .eq(Chat::getToId, toId)
+        lambdaQueryWrapper.eq(Chat::getFromId, reqDTO.getFromId())
+                .eq(Chat::getToId, reqDTO.getToId())
                 .set(Chat::getIsRead, 1);
         boolean update = update(lambdaQueryWrapper);
         if (update) {

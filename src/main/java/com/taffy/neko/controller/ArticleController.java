@@ -56,4 +56,10 @@ public class ArticleController {
         return articleService.getArticleCount();
     }
 
+    @GetMapping("/getHotArticles")
+    @ApiOperation(value = "获取五个最热门的帖子")
+    public R<?> getHotArticles() {
+        return articleService.getHotArticles();
+    }
+
 }
