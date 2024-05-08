@@ -15,6 +15,6 @@ public class AIServiceImpl implements AIService {
 
     @Override
     public String chatWithAI(String content) {
-        return langChainSDK.chatWithAI(content);
+        return langChainSDK.chatWithAI(content).block();
     }
 }
