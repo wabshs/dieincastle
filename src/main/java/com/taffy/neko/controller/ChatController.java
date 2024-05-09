@@ -3,7 +3,9 @@ package com.taffy.neko.controller;
 
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Chat;
+import com.taffy.neko.entity.ChatList;
 import com.taffy.neko.models.dto.ReadMsgDTO;
+import com.taffy.neko.service.ChatListService;
 import com.taffy.neko.service.ChatService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,6 +20,9 @@ public class ChatController {
 
     @Resource
     private ChatService chatService;
+
+    @Resource
+    private ChatListService chatListService;
 
 
     @GetMapping("/oneChat")
@@ -42,5 +47,18 @@ public class ChatController {
     @ApiOperation(value = "让私信变成已读")
     public R<?> readMsg(@RequestBody ReadMsgDTO reqDTO) {
         return chatService.readMsg(reqDTO);
+    }
+
+
+    @GetMapping("/checkChatIsExist")
+    @ApiOperation(value = "检查两个人之间是否有私信记录")
+    public R<?> checkChatIsExist(@RequestParam String user1, @RequestParam String user2) {
+        return chatService.checkChatExist(user1, user2);
+    }
+
+    @PostMapping("/createNewChat")
+    @ApiOperation(value = "创建新对话")
+    public R<?> createNewChatInList(@RequestBody ChatList chatList) {
+        return chatListService.createNewChat(chatList);
     }
 }

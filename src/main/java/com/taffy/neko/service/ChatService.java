@@ -33,4 +33,6 @@ public interface ChatService extends IService<Chat> {
     R<?> getChatLeft(String id);
 
     R<?> readMsg(ReadMsgDTO reqDTO);
+
+    R<?> checkChatExist(String user1, String user2);
 }

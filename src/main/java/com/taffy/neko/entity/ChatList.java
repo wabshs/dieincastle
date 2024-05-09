@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 @Data
-@TableName("/chat_list")
+@TableName("chat_list")
 public class ChatList {
 
     private String toId;
