@@ -31,4 +31,6 @@ public interface ArticleService extends IService<Article> {
     R<?> getArticleCount();
 
     R<?> getHotArticles();
+
+    R<?> articleCollection(int pageNum, int pageSize, String userId);
 }

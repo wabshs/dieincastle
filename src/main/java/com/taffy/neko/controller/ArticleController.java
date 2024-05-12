@@ -62,4 +62,10 @@ public class ArticleController {
         return articleService.getHotArticles();
     }
 
+    @GetMapping("/articleCollection")
+    @ApiOperation("根据id分页查询用户收藏的帖子")
+    public R<?> articleCollection(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam String userId) {
+        return articleService.articleCollection(pageNum, pageSize, userId);
+    }
+
 }

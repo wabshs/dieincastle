@@ -2,18 +2,22 @@ package com.taffy.neko.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Article;
 import com.taffy.neko.entity.ArticleTags;
+import com.taffy.neko.entity.BlogCollection;
 import com.taffy.neko.enums.ResponseEnum;
 import com.taffy.neko.mapper.ArticleMapper;
+import com.taffy.neko.mapper.BlogCollectionMapper;
 import com.taffy.neko.models.convertor.ArticleConvert;
 import com.taffy.neko.models.dto.CreateArticleDTO;
 import com.taffy.neko.models.vo.ArticleDetailVO;
 import com.taffy.neko.models.vo.ArticleVO;
 import com.taffy.neko.models.vo.HotArticleVO;
+import com.taffy.neko.models.vo.PageVo;
 import com.taffy.neko.service.ArticleService;
 import com.taffy.neko.service.ArticleTagsService;
 import org.springframework.stereotype.Service;
@@ -32,6 +36,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Resource
     private ArticleTagsService articleTagsService;
+
+    @Resource
+    private BlogCollectionMapper blogCollectionMapper;
 
     @Override
     public R<?> getArticleById(String id) {
@@ -105,5 +112,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<Article> articles = articleMapper.selectList(lambdaUpdateWrapper);
         List<HotArticleVO> hotArticleVOList = ArticleConvert.INSTANCE.toHotArticleVOList(articles);
         return new R<>().success(ResponseEnum.SUCCESS, hotArticleVOList);
+    }
+
+    @Override
+    public R<?> articleCollection(int pageNum, int pageSize, String userId) {
+        LambdaQueryWrapper<BlogCollection> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(BlogCollection::getUserId, userId)
+                .orderByDesc(BlogCollection::getCreateTime);
+        Page<BlogCollection> page = blogCollectionMapper.selectPage(new Page<>(pageNum, pageSize), lambdaQueryWrapper);
+        //封装成PageVO
+        PageVo articleCollection = new PageVo(page.getRecords(), page.getTotal());
+        return new R<>().success(ResponseEnum.SUCCESS, articleCollection);
     }
 }
