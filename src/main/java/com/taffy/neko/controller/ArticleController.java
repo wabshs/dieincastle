@@ -2,7 +2,9 @@ package com.taffy.neko.controller;
 
 
 import com.taffy.neko.Result.R;
+import com.taffy.neko.entity.BlogCollection;
 import com.taffy.neko.models.dto.CreateArticleDTO;
+import com.taffy.neko.models.dto.DeleteCollectArticleDTO;
 import com.taffy.neko.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -67,5 +69,30 @@ public class ArticleController {
     public R<?> articleCollection(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam String userId) {
         return articleService.articleCollection(pageNum, pageSize, userId);
     }
+
+    @PostMapping("/collectArticle")
+    @ApiOperation(value = "收藏帖子")
+    public R<?> collectArticle(@RequestBody BlogCollection reqDTO) {
+        return articleService.collectArticle(reqDTO);
+    }
+
+    @GetMapping("/checkCollect")
+    @ApiOperation(value = "检查是否收藏帖子")
+    public R<?> collectArticle(@RequestParam String userId, @RequestParam String articleId) {
+        return articleService.checkCollect(userId, articleId);
+    }
+
+    @PostMapping("/deleteCollectArticle")
+    @ApiOperation(value = "取消收藏帖子")
+    public R<?> deleteCollectArticle(@RequestBody DeleteCollectArticleDTO reqDTO) {
+        return articleService.deleteCollectArticle(reqDTO);
+    }
+
+    @GetMapping("/getArticleCollectNums/{articleId}")
+    @ApiOperation(value = "查询某个帖子收藏量")
+    public R<?> getArticleCollectNums(@PathVariable String articleId) {
+        return articleService.getArticleCollectNums(articleId);
+    }
+
 
 }

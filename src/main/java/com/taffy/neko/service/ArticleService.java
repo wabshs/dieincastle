@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Article;
 import com.taffy.neko.entity.ArticleTags;
+import com.taffy.neko.entity.BlogCollection;
 import com.taffy.neko.models.dto.CreateArticleDTO;
+import com.taffy.neko.models.dto.DeleteCollectArticleDTO;
 
 import java.util.List;
 
@@ -33,4 +35,12 @@ public interface ArticleService extends IService<Article> {
     R<?> getHotArticles();
 
     R<?> articleCollection(int pageNum, int pageSize, String userId);
+
+    R<?> collectArticle(BlogCollection reqDTO);
+
+    R<?> checkCollect(String userId, String articleId);
+
+    R<?> deleteCollectArticle(DeleteCollectArticleDTO reqDTO);
+
+    R<?> getArticleCollectNums(String articleId);
 }

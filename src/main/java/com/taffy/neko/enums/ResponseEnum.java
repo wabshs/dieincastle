@@ -16,6 +16,8 @@ public enum ResponseEnum {
     CHAT_LIST_EMPTY(201, "无历史对话记录"),
     TOKEN_ERROR(401, "Token验证失败，请重新登陆!"),
     USER_NULL(401, "用户不存在!"),
+    ARTICLE_COLLECTED(200, "已收藏"),
+    ARTICLE_UNCOLLECTED(201, "未收藏"),
     TOKEN_NULL_UNAUTHORIZED(401, "无Token，请重新登录!");
 
 

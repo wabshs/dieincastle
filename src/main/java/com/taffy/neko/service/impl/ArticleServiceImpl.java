@@ -2,9 +2,10 @@ package com.taffy.neko.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.sun.mail.iap.Response;
+import com.taffy.neko.Exception.ServiceException;
 import com.taffy.neko.Result.R;
 import com.taffy.neko.entity.Article;
 import com.taffy.neko.entity.ArticleTags;
@@ -14,6 +15,7 @@ import com.taffy.neko.mapper.ArticleMapper;
 import com.taffy.neko.mapper.BlogCollectionMapper;
 import com.taffy.neko.models.convertor.ArticleConvert;
 import com.taffy.neko.models.dto.CreateArticleDTO;
+import com.taffy.neko.models.dto.DeleteCollectArticleDTO;
 import com.taffy.neko.models.vo.ArticleDetailVO;
 import com.taffy.neko.models.vo.ArticleVO;
 import com.taffy.neko.models.vo.HotArticleVO;
@@ -123,5 +125,52 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         //封装成PageVO
         PageVo articleCollection = new PageVo(page.getRecords(), page.getTotal());
         return new R<>().success(ResponseEnum.SUCCESS, articleCollection);
+    }
+
+    @Override
+    public R<?> collectArticle(BlogCollection reqDTO) {
+        int insert = blogCollectionMapper.insert(reqDTO);
+        if (insert == 1) {
+            return new R<>().success(ResponseEnum.SUCCESS);
+        } else {
+            throw new ServiceException(ResponseEnum.ERROR);
+        }
+
+    }
+
+    @Override
+    public R<?> checkCollect(String userId, String articleId) {
+        LambdaQueryWrapper<BlogCollection> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BlogCollection::getArticleId, articleId)
+                .eq(BlogCollection::getUserId, userId);
+        BlogCollection blogCollection = blogCollectionMapper.selectOne(queryWrapper);
+        //查到了
+        if (blogCollection != null) {
+            return new R<>().success(ResponseEnum.ARTICLE_COLLECTED);
+        } else {
+            return new R<>().error(ResponseEnum.ARTICLE_UNCOLLECTED);
+        }
+
+    }
+
+    @Override
+    public R<?> deleteCollectArticle(DeleteCollectArticleDTO reqDTO) {
+        LambdaQueryWrapper<BlogCollection> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BlogCollection::getArticleId, reqDTO.getArticleId())
+                .eq(BlogCollection::getUserId, reqDTO.getUserId());
+        int delete = blogCollectionMapper.delete(queryWrapper);
+        if (delete == 1) {
+            return new R<>().success(ResponseEnum.SUCCESS);
+        } else {
+            throw new ServiceException(ResponseEnum.ERROR);
+        }
+    }
+
+    @Override
+    public R<?> getArticleCollectNums(String articleId) {
+        LambdaQueryWrapper<BlogCollection> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BlogCollection::getArticleId, articleId);
+        Long l = blogCollectionMapper.selectCount(queryWrapper);
+        return new R<>().success(ResponseEnum.SUCCESS, l);
     }
 }
