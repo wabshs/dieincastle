@@ -22,7 +22,7 @@ public class AIController {
     private AIService aiService;
 
     @PostMapping("/chat")
-    @ApiOperation(value = "和湖小工愉快的对话吧~")
+    @ApiOperation(value = "和本地知识库对话")
     public R<?> chatWithAI(@RequestParam String content) {
         return new R<>().success(ResponseEnum.SUCCESS, aiService.chatWithAI(content));
     }

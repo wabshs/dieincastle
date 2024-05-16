@@ -43,4 +43,6 @@ public interface ArticleService extends IService<Article> {
     R<?> deleteCollectArticle(DeleteCollectArticleDTO reqDTO);
 
     R<?> getArticleCollectNums(String articleId);
+
+    R<?> getArticleByTagsPage(int pageNum, int pageSize, String tags);
 }

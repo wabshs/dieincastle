@@ -22,4 +22,10 @@
                       on a.user_id = u.id
         order by create_time desc
     </select>
+    <select id="getArticleByTags" resultType="com.taffy.neko.entity.Article">
+        select *
+        from article
+        where
+        FIND_IN_SET(#{tags},tags)
+    </select>
 </mapper>

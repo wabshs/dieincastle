@@ -173,4 +173,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Long l = blogCollectionMapper.selectCount(queryWrapper);
         return new R<>().success(ResponseEnum.SUCCESS, l);
     }
+
+    @Override
+    public R<?> getArticleByTagsPage(int pageNum, int pageSize, String tags) {
+        Page<Article> page = new Page<>(pageNum, pageSize);
+        List<Article> articleList = articleMapper.getArticleByTags(page, tags);
+        PageVo pageVo = new PageVo(articleList, (long) articleList.size());
+        return new R<>().success(ResponseEnum.SUCCESS, pageVo);
+    }
 }

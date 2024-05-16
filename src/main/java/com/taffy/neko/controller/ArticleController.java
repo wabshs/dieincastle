@@ -95,4 +95,11 @@ public class ArticleController {
     }
 
 
+    @GetMapping("/getArticleByTagsPage")
+    @ApiOperation(value = "根据标签分页查询帖子")
+    public R<?> getArticleByTagsPage(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam("tags") String tags) {
+        return articleService.getArticleByTagsPage(pageNum, pageSize, tags);
+    }
+
+
 }

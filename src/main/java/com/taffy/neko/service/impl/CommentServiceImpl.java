@@ -44,7 +44,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         //DO -> VO
         List<CommentVO> commentVOList = toCommentVOList(page.getRecords());
 
-        //查询所有根评论对应的子评论集合，并复制给相应的熟悉
+        //查询所有根评论对应的子评论集合，并复制给相应的属性
         for (CommentVO commentVO : commentVOList) {
             //查询对应的子评论
             List<CommentVO> children = getChildren(commentVO.getId());
