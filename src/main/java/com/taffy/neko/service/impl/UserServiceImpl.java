@@ -104,7 +104,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         //条件构造器
         lambdaQueryWrapper.eq(User::getUserName, reqDTO.getUserName())
-                .eq(User::getPassword, reqDTO.getPassword());
+                .eq(User::getPassword, reqDTO.getPassword())
+                .eq(User::getIsDeleted, 1); //要未删除的 1正常0删除
         if (userMapper.selectCount(lambdaQueryWrapper) == 1) {
             //把这个User查出来返回id
             User user = userMapper.selectOne(lambdaQueryWrapper);

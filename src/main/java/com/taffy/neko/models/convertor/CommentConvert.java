@@ -3,6 +3,7 @@ package com.taffy.neko.models.convertor;
 
 import com.taffy.neko.entity.Comment;
 import com.taffy.neko.models.vo.CommentVO;
+import com.taffy.neko.models.vo.CommentsVO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -14,4 +15,6 @@ public interface CommentConvert {
 
     //List<Comment> -> List<CommentVO>
     List<CommentVO> toCommentVOList(List<Comment> list);
+
+    List<CommentsVO> toCommentsVO(List<Comment> list);
 }

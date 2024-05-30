@@ -11,10 +11,12 @@ import java.util.List;
 public interface ArticleMapper extends BaseMapper<Article> {
 
     //自定义mapper使用分页
-    List<ArticleVO> selectArticleVOByPage(IPage<ArticleVO> page);
+    List<ArticleVO> selectArticleVOByPage(IPage<ArticleVO> page,@Param("header") String header);
 
     //更新文章浏览量
     boolean updateViews(String id);
 
     List<Article> getArticleByTags(IPage<Article> page,@Param("tags") String tags);
+
+    List<Article> getArticleByTagsCount(String tags);
 }

@@ -20,6 +20,7 @@
         from article a
                  join user u
                       on a.user_id = u.id
+        where a.header like concat('%',#{header},'%')
         order by create_time desc
     </select>
     <select id="getArticleByTags" resultType="com.taffy.neko.entity.Article">
@@ -27,5 +28,11 @@
         from article
         where
         FIND_IN_SET(#{tags},tags)
+    </select>
+    <select id="getArticleByTagsCount" resultType="com.taffy.neko.entity.Article">
+        select *
+        from article
+        where
+            FIND_IN_SET(#{tags},tags)
     </select>
 </mapper>

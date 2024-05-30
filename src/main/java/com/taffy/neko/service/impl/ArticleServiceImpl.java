@@ -12,6 +12,7 @@ import com.taffy.neko.entity.ArticleTags;
 import com.taffy.neko.entity.BlogCollection;
 import com.taffy.neko.enums.ResponseEnum;
 import com.taffy.neko.mapper.ArticleMapper;
+import com.taffy.neko.mapper.ArticleTagsMapper;
 import com.taffy.neko.mapper.BlogCollectionMapper;
 import com.taffy.neko.models.convertor.ArticleConvert;
 import com.taffy.neko.models.dto.CreateArticleDTO;
@@ -42,6 +43,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Resource
     private BlogCollectionMapper blogCollectionMapper;
 
+    @Resource
+    private ArticleTagsMapper articleTagsMapper;
+
     @Override
     public R<?> getArticleById(String id) {
         Article article = articleMapper.selectById(id);
@@ -61,14 +65,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
     @Override
-    public R<?> selectArticleVOByPage(int pageNum, int pageSize) {
+    public R<?> selectArticleVOByPage(int pageNum, int pageSize, String header) {
         Page<ArticleVO> page = new Page<>(pageNum, pageSize);
-        List<ArticleVO> articleVOList = articleMapper.selectArticleVOByPage(page);
+        List<ArticleVO> articleVOList = articleMapper.selectArticleVOByPage(page, header);
         articleVOList.forEach(articleVO -> {
             List<ArticleTags> tagsList = selectArticleTags(articleVO.getId());
             articleVO.setArticleTags(tagsList);
         });
-        return new R<>().success(ResponseEnum.SUCCESS, articleVOList);
+        PageVo pageVo = new PageVo(articleVOList, (long) articleVOList.size());
+        return new R<>().success(ResponseEnum.SUCCESS, pageVo);
     }
 
     @Override
@@ -174,11 +179,23 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return new R<>().success(ResponseEnum.SUCCESS, l);
     }
 
+
+    private int getArticleByTagsCount(String tags) {
+        List<Article> articleByTagsCount = articleMapper.getArticleByTagsCount(tags);
+        return articleByTagsCount.size();
+    }
+
     @Override
     public R<?> getArticleByTagsPage(int pageNum, int pageSize, String tags) {
         Page<Article> page = new Page<>(pageNum, pageSize);
         List<Article> articleList = articleMapper.getArticleByTags(page, tags);
-        PageVo pageVo = new PageVo(articleList, (long) articleList.size());
+        PageVo pageVo = new PageVo(articleList, (long) getArticleByTagsCount(tags));
         return new R<>().success(ResponseEnum.SUCCESS, pageVo);
+    }
+
+    @Override
+    public R<?> getTagsById(String id) {
+        ArticleTags articleTags = articleTagsMapper.selectById(id);
+        return new R<>().success(ResponseEnum.SUCCESS, articleTags);
     }
 }

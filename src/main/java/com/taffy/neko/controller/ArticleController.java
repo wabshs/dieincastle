@@ -36,8 +36,8 @@ public class ArticleController {
 
     @GetMapping("/selectArticlePage")
     @ApiOperation(value = "查找帖子")
-    public R<?> selectArticleVOByPage(@RequestParam int pageNum, @RequestParam int pageSize) {
-        return articleService.selectArticleVOByPage(pageNum, pageSize);
+    public R<?> selectArticleVOByPage(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam(defaultValue = "") String header) {
+        return articleService.selectArticleVOByPage(pageNum, pageSize,header);
     }
 
     @PutMapping("/updateViews/{id}")
@@ -99,6 +99,12 @@ public class ArticleController {
     @ApiOperation(value = "根据标签分页查询帖子")
     public R<?> getArticleByTagsPage(@RequestParam int pageNum, @RequestParam int pageSize, @RequestParam("tags") String tags) {
         return articleService.getArticleByTagsPage(pageNum, pageSize, tags);
+    }
+
+
+    @GetMapping("/getTagsById")
+    public R<?> getTagsById(@RequestParam String id) {
+        return articleService.getTagsById(id);
     }
 
 
